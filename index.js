@@ -15,6 +15,26 @@
   * @returns {Object}
   */
 function getAugumentedDataset (data, m) {
+ 
+ // Multi Dimensional Array
+  if (Array.isArray(data[0])){
+        cache = Array.from({length: data[0].length}, (_, i) => i)
+        cache.forEach((x,i) => { cache[i] = [] });
+        var tmp = [];
+        data.forEach(set => {
+                cache.forEach((x,i) => {
+                        cache[i].push(set[i]);
+                });
+        });
+        cache.forEach((x,i) => {
+                tmp[i] = getAugumentedDataset(cache[i], m);
+        })
+        // Merge Back Dimensions
+        tmp[0].augumentedDataset = compact([tmp[0].augumentedDataset, tmp[1].augumentedDataset]);
+        return tmp[0];
+  }
+ 
+  // Mono Dimensional Array
   var initialparams = [0.0, 0.1, 0.2, 0.4, 0.6, 0.8, 1.0]
   var alpha, beta, gamma, period, prediction
   var err = Infinity
@@ -216,6 +236,12 @@ function calcHoltWinters
   }
 
   return ft
+}
+
+function compact(arrays) {
+    return arrays[0].map(function(_,i){
+        return arrays.map(function(array){return array[i]})
+    });
 }
 
 module.exports = getAugumentedDataset
