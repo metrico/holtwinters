@@ -14,7 +14,7 @@ https://en.wikipedia.org/wiki/Exponential_smoothing
 ## Usage
 
 ```js
-  var holtWinters = require('holtwinters')
+  var holtWinters = require('holtwinters-md')
 
   var data = [1, 4, 5, 3, 1, 3, 4, 1, 2, 4, 5, 5]
   var predictionLength = 4
