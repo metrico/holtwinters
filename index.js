@@ -18,19 +18,17 @@ function getAugumentedDataset (data, m) {
  
  // Multi Dimensional Array
   if (Array.isArray(data[0])){
-        cache = Array.from({length: data[0].length}, (_, i) => i)
-        cache.forEach((x,i) => { cache[i] = [] });
         var tmp = [];
+        var cache = Array.from({length: data[0].length}, (_, i) => i)
+        cache.forEach((x,i) => { cache[i] = [] });
         data.forEach(set => {
-                cache.forEach((x,i) => {
-                        cache[i].push(set[i]);
-                });
+                cache.forEach((x,i) => { cache[i].push(set[i]); });
         });
         cache.forEach((x,i) => {
                 tmp[i] = getAugumentedDataset(cache[i], m);
         })
-        // Merge Back Dimensions
-        tmp[0].augumentedDataset = compact([tmp[0].augumentedDataset, tmp[1].augumentedDataset]);
+        // Merge All Dimensions
+        tmp[0].augumentedDataset = compactDataset('augumentedDataset', [...tmp]);
         return tmp[0];
   }
  
@@ -238,9 +236,9 @@ function calcHoltWinters
   return ft
 }
 
-function compact(arrays) {
-    return arrays[0].map(function(_,i){
-        return arrays.map(function(array){return array[i]})
+function compactDataset(key, arrays) {
+    return arrays[0][key].map(function(_,i){
+        return arrays.map(function(array){return array[key][i]})
     });
 }
 
