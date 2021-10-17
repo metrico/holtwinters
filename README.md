@@ -8,7 +8,7 @@ https://en.wikipedia.org/wiki/Exponential_smoothing
 ## Installation
 
 ```shell
-  npm install holtwinters --save
+  npm install holtwinters-md --save
 ```
 
 ## Usage
