@@ -1,8 +1,8 @@
 /**
-  * RubyGarage.
-  * https://rubygarage.org/
+  * Holt-Winters Forecasting Library
   *
   * Copyright (c) 2016 RubyGarage.
+  * Copyright (c) 2020 QXIP/Metrico.
   * Licensed under the MIT license.
   */
 
