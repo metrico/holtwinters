@@ -36,6 +36,7 @@ function getAugumentedDataset (data, m) {
   var initialparams = [0.0, 0.1, 0.2, 0.4, 0.6, 0.8, 1.0]
   var alpha, beta, gamma, period, prediction
   var err = Infinity
+  var isFloat = data.reduce((a, b) => a + b, 0) % 1 === 0;
 
   // TODO: rewrite this bruteforce with Levenberg-Marquardt equation
   initialparams.forEach(function (a) {
@@ -46,6 +47,8 @@ function getAugumentedDataset (data, m) {
           var error
           if (currentPrediction) {
             error = mse(data, currentPrediction, p)
+            // Preserve same format of source series
+            if(isFloat){ currentPrediction = currentPrediction.map((val) => parseInt(val)) }
           }
 
           if (error && err > error) {
@@ -61,7 +64,12 @@ function getAugumentedDataset (data, m) {
     })
   })
 
-  var augumentedDataset = prediction.slice()
+  try {
+        var augumentedDataset = prediction.slice()
+  } catch(e){
+        if (m>1) return getAugumentedDataset(data, m-1);
+        else return false;
+  }
 
   for (var i = 0; i < data.length; i++) {
     augumentedDataset[i] = data[i]
