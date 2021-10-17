@@ -15,12 +15,11 @@ https://en.wikipedia.org/wiki/Exponential_smoothing
 
 ```js
   var holtWinters = require('holtwinters')
-  var getAugumentedDataset = holtWinters.getAugumentedDataset
 
   var data = [1, 4, 5, 3, 1, 3, 4, 1, 2, 4, 5, 5]
   var predictionLength = 4
 
-  var result = getAugumentedDataset(data, predictionLength)
+  var result = holtWinters(data, predictionLength)
 
 
   console.log(result)
